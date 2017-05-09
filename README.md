@@ -2,7 +2,7 @@
 
 Program po odpaleniu prosi o ścieżkę folderu w którym znajdują się nasze filmy. Później na podstawie nazwy folderu (filmu) wykonuje dwa zadania:
 - zmienia nazwę folderu w formacie: Nazwa filmu  (rok) [ocena] np. Caramel    (2007) [7]
-- dodaje pliku About movie.txt z opisem filmu np.:
+- dodaje plik About movie.txt z opisem filmu np.:
 ```
 Tytuł:              Caramel
 Polski tytuł:       Karmel
