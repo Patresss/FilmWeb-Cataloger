@@ -17,9 +17,11 @@ public class CatalogManager {
     private final static Logger logger = LoggerFactory.getLogger(CatalogManager.class);
     private final static String descriptionFileName = "About movie.txt";
     private File[] directories;
+    private FilmType type;
     private Map<File, Movie> fileMovieMap = new HashMap<>();
 
-    public CatalogManager(String path) {
+    public CatalogManager(String path, FilmType type) {
+        this.type = type;
         File dir = new File(path);
         directories = dir.listFiles(File::isDirectory);
         connectDirWithMovie();
@@ -31,7 +33,7 @@ public class CatalogManager {
 
     private void connectDirWithMovie() {
         for (File file : directories) {
-            fileMovieMap.put(file, Searcher.searchMovie(file.getName()));
+            fileMovieMap.put(file, Searcher.searchMovie(file.getName(), type));
         }
     }
 
@@ -52,12 +54,11 @@ public class CatalogManager {
         for (Map.Entry<File, Movie> entry : fileMovieMap.entrySet()) {
             File file = entry.getKey();
             Movie movie = entry.getValue();
-            File newNamedDir = new File(file.getParent(), MovieManagerUtils.getDirName(movie));
+            File newNamedDir = new File(file.getParent(), MovieManagerUtils.getDirName(movie).replaceAll("[\\\\/:*?\"<>|]", ""));
+            logger.debug("Renaming dir from: " + file.getName() + " to: " + newNamedDir.getName());
             boolean success = file.renameTo(newNamedDir);
             if (!success) {
                 logger.error("Can't change name from: " + file.getName() + " to: " + newNamedDir.getName());
-            } else {
-                logger.debug("Renamed dir from: " + file.getName() + " to: " + newNamedDir.getName());
             }
 
         }

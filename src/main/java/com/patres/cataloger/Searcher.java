@@ -16,12 +16,17 @@ public class Searcher {
     private Searcher() {
     }
 
-    public static Movie searchMovie(String title) {
+    public static Movie searchMovie(String title, FilmType type) {
         Movie movie = new Movie();
 
         FilmwebApi filmwebApi = new FilmwebApi();
         String preparedTitle = title.split("\\(")[0];
-        List<FilmSearchResult> filmInfoList = filmwebApi.findFilm(preparedTitle);
+        List<FilmSearchResult> filmInfoList;
+        if(FilmType.SERIES.equals(type)) {
+            filmInfoList = filmwebApi.findSeries(preparedTitle);
+        } else {
+            filmInfoList = filmwebApi.findFilm(preparedTitle);
+        }
 
         if (filmInfoList.isEmpty()) {
             logger.warn("File {} not found", title);

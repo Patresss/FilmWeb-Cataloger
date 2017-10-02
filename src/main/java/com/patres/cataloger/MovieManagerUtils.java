@@ -11,7 +11,7 @@ public class MovieManagerUtils {
         String title = movie.getTitle() == null ? "" : movie.getTitle();
         String year = movie.getYear() == null ? "" : movie.getYear().toString();
         String rate = movie.getRate() == null ? "" : movie.getRate();
-        stringBuilder.append(String.format("%s    ", title));
+        stringBuilder.append(String.format("%s ", title));
         stringBuilder.append(String.format("(%s) ", year));
         stringBuilder.append(String.format("[%s]", rate));
         return stringBuilder.toString();
